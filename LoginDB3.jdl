@@ -1,0 +1,86 @@
+
+entity LoginUser {
+	loginId String 
+	password String 
+    name String required
+	firstName String 
+	lastName String 
+	middleName String 
+	phone String 
+	email String required
+    imageUrl String
+    emailVerified Boolean
+    provider AuthProvider 
+    providerId String
+    userType UserType
+    userStatus UserStatus
+}
+enum AuthProvider {
+	LOCAL(local)
+    FACEBOOK(facebook)
+    GOOGLE(google)
+    GITHUB(github)
+}
+enum UserStatus {
+	ACTIVE(active)
+    INACTIVE(inactive)
+    APPROVED(approved)
+    REJECTED(rejected)
+    NEW(new)
+}
+enum UserType {
+	ADMIN(admin)
+    PARTNER(partner)
+    SELLER(seller)
+    BUYER(buyer)
+}
+relationship OneToMany {
+  LoginUser{userAddresses} to UserAddress{loginUser}
+}
+entity Seller {
+	loginId String 
+	businessName String required
+    businessWebsite String
+    tagLine String
+    logo String
+	businessLicNo String 
+	businessType String required
+    taxId String
+	
+}
+entity Partner {
+	loginId String 
+	territory String
+}
+entity Customer {
+	loginId String 
+	dateOfBirth LocalDate
+}
+entity UserAddress {
+	loginId String 
+	address1 String required
+	address2 String 
+    landmark String
+	city String required
+	state String required
+	country String required
+	zipcode String required
+    addressType AddressType
+    locationName String
+    phone String
+    website String
+    businessHour String
+}
+enum AddressType {
+	PRIMARY(primary)
+    SECONDARY(secondary)
+    DELIVERY(delivery)
+    TEMPORARY(temporary)
+    HEADOFFICE(headoffice)
+    SHOWROOM(showroom)
+}
+
+
+
+
+

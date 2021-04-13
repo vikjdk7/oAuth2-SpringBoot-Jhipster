@@ -1,0 +1,79 @@
+entity Product {
+	name String required
+    brand String required
+}
+entity ProductCategory {
+	categoryName String required
+    categoryStatus CategoryStatus
+}
+enum CategoryStatus {
+	ACTIVE(active)
+    INACTIVE(inactive)
+}
+entity Seller {
+	businessName String required
+	businessLicNo String 
+	businessType String required
+	address String required
+	area String
+	landmark String
+	city String required
+	state String required
+	country String required
+	zipcode String required
+}
+entity Partner {
+
+}
+entity Customer {
+
+}
+entity User {
+	loginId String 
+	password String 
+    name String required
+	firstName String 
+	lastName String 
+	middleName String 
+	phone String 
+	email String required
+    imageUrl String
+    emailVerified Boolean
+    provider AuthProvider 
+    providerId String
+}
+enum AuthProvider {
+	LOCAL(local)
+    FACEBOOK(facebook)
+    GOOGLE(google)
+    GITHUB(github)
+}
+entity UserAddress {
+	address1 String required
+	address2 String 
+	city String required
+	state String required
+	country String required
+	zipcode String required
+}
+entity ProductOrder {
+
+}
+entity ProductDeal {
+
+}
+entity ProductReview {
+	ratingStar Decimal required
+	feedback String required
+
+}
+entity Invoice {
+
+}
+entity MobileTopup {
+
+}
+entity PaymentMethod {
+
+}
+

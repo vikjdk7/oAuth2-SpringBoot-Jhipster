@@ -1,0 +1,14 @@
+entity BankAccount {
+	userId String required
+    userEmail String required
+	bankName String required
+    ifscCode String required
+    branch String required
+    accountHolder String required
+    accountNumber String required
+    cityId String 
+    stateId String 
+    countryId String 
+    updatedOn Instant
+    updatedBy String
+}

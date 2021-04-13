@@ -1,0 +1,8 @@
+
+entity ProfilePicture {
+	userEmail String required
+    pictureName String required
+    pictureImage ImageBlob required
+    updatedOn Instant
+    updatedBy String
+}

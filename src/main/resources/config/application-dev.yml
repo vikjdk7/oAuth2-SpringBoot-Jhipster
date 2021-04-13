@@ -1,0 +1,165 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+  level:
+    ROOT: DEBUG
+    io.github.jhipster: DEBUG
+    com.agosh.login: DEBUG
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+
+spring:
+  profiles:
+    active: dev
+    include:
+      - swagger
+      # Uncomment to activate TLS for the dev profile
+      #- tls
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: LoginService
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  thymeleaf:
+    cache: false
+  sleuth:
+    sampler:
+      probability: 1 # report 100% of traces
+  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+    base-url: http://localhost:9411
+    enabled: false
+    locator:
+      discovery:
+        enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 869665525208-q97vtpc03md2pnbe646g8lb8acqee2h5.apps.googleusercontent.com
+            clientSecret: is-XtheQx4h3YhoO9QfugAmj
+            #            redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
+            redirectUri: 'https://www.agosh.com/services/loginservice/oauth2/callback/{registrationId}' # Note that facebook now mandates the use of https redirect URIs, so make sure your app supports https in production
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: 777241676476284
+            clientSecret: 8e80b1a0327fa67308764759a8c6fb06
+            #            redirectUri: '{baseUrl}/oauth2/callback/{registrationId}' # Note that facebook now mandates the use of https redirect URIs, so make sure your app supports https in production
+            redirectUri: 'https://www.agosh.com/services/loginservice/oauth2/callback/{registrationId}' # Note that facebook now mandates the use of https redirect URIs, so make sure your app supports https in production
+            scope:
+              - email
+              - public_profile
+          github:
+            clientId: d3e47fc2ddd966fa4352
+            clientSecret: 3bc0f6b8332f93076354c2a5bada2f5a05aea60d
+            redirectUri: 'https://www.agosh.com/services/loginservice/oauth2/callback/{registrationId}'
+            scope:
+              - user:email
+              - read:user
+        provider:
+          facebook:
+            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+app:
+  #  auth:
+  #    tokenSecret: Y2I1MGM3NzI4NTQwMWRmMzM2NjE3OTYzY2Q5NGNiNDI4Mzk0ODI2MDA4ZjAwMjlkZGM4MjcxOGIxMjMxYTA4OTgxYjQwMTE2MTcxMjU5NDczMDUyOTVmOTMxYTdkYjJkYjgwNjQwOTVmZWUzMzc0ODI4ZGQ3MTQ1NWYwMGI0Y2M=
+  #    tokenExpirationMsec: 864000000
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the frontend client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - https://www.agosh.com/oauth2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect
+server:
+  port: 9081
+
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+jhipster:
+  # CORS is disabled by default on microservices, as you should access them through a gateway.
+  # If you want to enable it, please uncomment the configuration below.
+  #  cors:
+  #    allowed-origins: '*'
+  #    allowed-methods: '*'
+  #    allowed-headers: '*'
+  #    exposed-headers: 'Authorization,Link,X-Total-Count'
+  #    allow-credentials: true
+  #    max-age: 1800
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        #        base64-secret: Y2I1MGM3NzI4NTQwMWRmMzM2NjE3OTYzY2Q5NGNiNDI4Mzk0ODI2MDA4ZjAwMjlkZGM4MjcxOGIxMjMxYTA4OTgxYjQwMTE2MTcxMjU5NDczMDUyOTVmOTMxYTdkYjJkYjgwNjQwOTVmZWUzMzc0ODI4ZGQ3MTQ1NWYwMGI0Y2M=
+        base64-secret: YjkwYjhlMDY3YzJhYzJlNGNiZTc0NTMwNDI3OTRlZGY1MmRlYmQ0YjJlYWM0YzZhNDY4YjA0YTY3ZjVhMDJhZTExMDJmNmRjNmJmZDhlNjBkMWQ1YWYzZGQxODExY2RjYjQxMGJkN2IyMzIxNzgyYmE2MTExMWRjNWQxYzMyMjM=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 2592000
+        token-validity-in-seconds-for-remember-me: 2592000
+  mail: # specific JHipster mail property, for standard properties see MailProperties
+    base-url: http://127.0.0.1:9081
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# application:

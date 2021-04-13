@@ -1,0 +1,43 @@
+entity UserAddress2 {
+	loginId String 
+	address1 String required
+	address2 String 
+    landmark String
+	zipcode String required
+    addressType AddressType
+    locationName String
+    phone String
+    website String
+    businessHour String
+    updatedOn Instant
+    updatedBy String
+}
+entity City {
+	ctid Integer
+	name String
+	stateId Integer
+}
+entity State {
+	sid Integer
+	name String
+	countryId Integer
+}
+entity Country {
+	cid Integer
+    sortname String
+	name String
+	phoneCode Integer
+}
+relationship ManyToOne {
+  UserAddress2{country} to Country
+  UserAddress2{state} to State
+  UserAddress2{cities} to City
+}
+enum AddressType {
+    PRIMARY(primary)
+    SECONDARY(secondary)
+    DELIVERY(delivery)
+    TEMPORARY(temporary)
+    HEADOFFICE(headoffice)
+    SHOWROOM(showroom)
+}

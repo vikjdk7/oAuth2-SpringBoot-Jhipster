@@ -1,0 +1,17 @@
+
+entity UserContact {
+	name String required
+    phone String required
+    contactEmail String required
+    loginUserEmail String required
+    relation String required
+	address1 String required
+	address2 String 
+    landmark String
+	city Integer
+	state Integer 
+	country Integer 
+	zipcode String 
+	updatedOn Instant
+    updatedBy String
+}
